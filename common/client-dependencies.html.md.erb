@@ -1,0 +1,83 @@
+---
+title: Client Dependencies
+owner: Spring Cloud Services
+---
+
+<strong><%= modified_date %></strong>
+
+See below for information about the dependencies required for client apps using Spring Cloud Services service instances.
+
+## <a id="what-are"></a>What are the Client Dependencies?
+
+To use a Spring Cloud Services service instance, a client app must be bound to the service instance and must include the necessary client dependencies. Although these are based on dependencies used by client apps with Spring Cloud OSS, you must use the Spring Cloud Services dependencies in your app if you are using Spring Cloud Services. See below for information about the structure and uses of the client dependencies.
+
+### <a id="what-are-boms"></a>The Bill Of Materials (BOM) Dependencies
+
+The Spring Cloud OSS project encompasses a wide variety of subprojects, each with an independent release cadence. A release of the overall Spring Cloud project is called a release train, and includes particular versions of each of the subprojects. (See the [Client Dependency Versioning](#client-dependency-versioning) section below for more information about versioning of the Spring Cloud OSS dependencies.)
+
+Spring Cloud includes a Maven Bill Of Materials (BOM) file for each release train version. This file describes the subproject versions included in the release train. After importing the BOM file, a client app can reference one of the Spring Cloud subprojects without specifying its version, which is provided by the BOM. The subproject versions in the BOM are compatible with each other and represent the subproject releases included in the corresponding release train version.
+
+Spring Cloud Services also includes a Maven BOM file for each version, serving similar purposes. The Spring Cloud Services BOM describes dependencies required for Spring Cloud Services, so that a client app similarly does not need to specify those dependency versions. The Spring Cloud Services BOM may override versions included in the Spring Cloud OSS BOM.
+
+### <a id="what-are-starters"></a>The Starter Dependencies
+
+A Spring Cloud OSS project can include a library for use by client apps that work with its server component. For example, the Spring Cloud Config project includes a Spring Cloud Config Client library, which reads configuration properties served by a Spring Cloud Config Server server app and creates a Spring `PropertySource` for them. A Spring Cloud project may also take advantage of other open-source libraries on the client side. For example, the Spring Cloud Config Client library uses the Jackson Project for parsing JSON configuration.
+
+To simplify dependency management for a client app, each Spring Cloud OSS project includes a _starter:_ a maintained set of dependencies used by a client app, packaged in one Maven POM and included in the client app as a single dependency.
+
+Each of the Spring Cloud Services services has a corresponding starter. Similarly to a Spring Cloud OSS project, a Spring Cloud Services starter bundles the dependencies used by a client app to consume the service. These dependencies are similar to those used by the corresponding Spring Cloud OSS project (for example, the Config Server is based on the Spring Cloud Config project), with some differences specific to Spring Cloud Services (for example, Spring Cloud Security OAuth2 is added so that a client app can navigate the security built into Config Server).
+
+## <a id="including-dependencies"></a>Including Spring Cloud Services Dependencies
+
+<%= partial 'general-dependencies' %>
+
+### <a id="config-server"></a>Config Server
+
+Your app must declare `spring-cloud-services-starter-config-client` as a dependency.
+
+<%= partial 'config-server-dependency' %>
+
+The Spring Cloud Services starter for Config Server includes:
+
+* The Spring Cloud Config Client library
+* The Spring Security OAuth2 library
+
+## <a id="client-dependency-versioning"></a>Client Dependency Versioning
+
+A release of the Spring Cloud Services client dependencies follows a release of the underlying open-source Spring Cloud components, which are based on particular releases of Spring Boot. For more information about the basis of Spring Cloud or Spring Cloud Services library releases, see below.
+
+### <a id="spring-cloud-oss-releases"></a>Spring Cloud OSS Releases
+
+Each Spring Cloud major release is named after a London Underground station (as in "Spring Cloud Camden.RELEASE"). Minor releases are known as service releases and are designated `SR[n]` (as in "Spring Cloud Camden.SR7"), where `[n]` is the minor release number.
+
+A given major release of Spring Cloud supports the current Spring Boot minor release and one Spring Boot minor release following. When a new Spring Boot major release is published, it will be supported only in the next major release of Spring Cloud. (The Spring Boot 2.0 release follows the Spring Boot 1.5 release; there was no 1.6 release.)
+
+| Spring Cloud Release | Supported Spring Boot Release |
+|----------------------|-------------------------------|
+| Greenwich            | 2.1                           |
+| Finchley             | 2.0                           |
+| Edgware              | 1.5                           |
+
+### <a id="spring-cloud-services-client-releases"></a>Spring Cloud Services Client Releases
+
+The Spring Cloud Services connectors, as well as the starters dependencies that include the connectors, are versioned and released independently of the Spring Cloud Services tile. The connectors and starters are based on the open-source Spring Cloud client libraries for Config Server, and have a new release to follow each Spring Cloud release that affects these components.
+
+A given minor release of the Spring Cloud Services starters uses a particular release of Spring Cloud.
+
+| Spring Cloud Services Starters Release | Underlying Spring Cloud Release |
+|----------------------------------------|---------------------------------|
+| 2.1.x                                  | Greenwich.RELEASE               |
+| 2.0.x                                  | Finchley.RELEASE                |
+| 1.6.x                                  | Edgware.RELEASE                 |
+
+### <a id="spring-cloud-services-tile-releases"></a>Spring Cloud Services Tile Releases
+
+The Spring Cloud Services tile is versioned and released independently of the Spring Cloud Services connectors and starters. The tile contains the server-side components from Spring Cloud for Config Server, and typically has a new release following each Spring Cloud service release that affects these components.
+
+A given minor release of the tile includes server-side components from a particular release of Spring Cloud, typically the last stable release.
+
+| Spring Cloud Services Tile Release | Underlying Spring Cloud Release |
+|------------------------------------|---------------------------------|
+| 3.0.x                              | Greenwich                       |
+| 2.0.x                              | Finchley                        |
+| 1.5.x                              | Edgware                         |

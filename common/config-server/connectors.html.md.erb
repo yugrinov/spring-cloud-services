@@ -1,0 +1,58 @@
+---
+title: Spring Cloud&reg; Connectors
+owner: Spring Cloud Services
+---
+
+<strong><%= modified_date %></strong>
+
+To connect client apps to the Config Server, Spring Cloud Services uses [Spring Cloud Connectors](https://cloud.spring.io/spring-cloud-connectors/spring-cloud-connectors.html), including the [Spring Cloud Cloud Foundry Connector](https://cloud.spring.io/spring-cloud-connectors/spring-cloud-cloud-foundry-connector.html), which discovers services bound to apps running in Cloud Foundry.
+
+## <a id="application-configuration"></a>Application Configuration
+
+When the connector detects a Config Server service instance which has been bound to the app, it will automatically set the `spring.cloud.config.uri` property in the client app's environment, using the URL provided in the Config Server instance's binding credentials. The connector will also set additional security properties to allow the client app to access the Config Server service instance.
+
+### <a id="hashicorp-vault-token-renewal"></a>HashiCorp Vault Token Renewal
+
+When Spring's scheduled task execution support is enabled in a client app (using the `@EnableScheduling` annotation) and the `SPRING_CLOUD_CONFIG_TOKEN` environment variable (or the `spring.cloud.config.token` property) is set on the app, the connector enables automatic token renewal for a HashiCorp Vault client token. By default, the token's Time To Live (TTL) is set at 300000 milliseconds and the connector automatically renews the app's token every 60000 milliseconds.
+
+You can configure the token's TTL and the renewal interval using properties under `vault.token`, set in the `application.yml` or `application.properties` file. The TTL is set using the `vault.token.ttl` property and the renewal interval is set using the `vault.token.renew.rate` property.
+
+The following YAML sets the token TTL to 600000 milliseconds (10 minutes) and sets the renewal interval to 180000 milliseconds (three minutes).
+
+```yml
+vault:
+  token:
+    ttl: 600000
+    renew:
+      rate: 180000 
+```
+
+### <a id="hashicorp-vault-property-source-redaction"></a>HashiCorp Vault Property Source Redaction
+
+In the Spring Boot Actuator `/actuator/env` endpoint, property names and values from a HashiCorp Vault property source are redacted for security. By default, the connector redacts properties whose names begin with `configService:vault:`, and they are displayed in the output of `/actuator/env` as shown in the following example:
+
+```
+"configService:vault:game": {
+    "******": "Properties from this source are redacted for security reasons"
+},
+```
+
+You can configure the pattern used to determine which properties to redact, as well as the message displayed in place of those properties' values, using properties set in the `application.yml` or `application.properties` file. The pattern is set using the `endpoints.env.mask.sourceNamePatterns` property (wildcards, written as `*`, are allowed) and the message is set using the `endpoints.env.mask.message` property.
+
+For example, the following YAML sets the redacted property name pattern to match property sources whose names begin with `configService:` and sets the message to `Redacted for security`.
+
+```yml
+endpoints:
+  env:
+    mask: 
+      sourceNamePatterns: "configService:"
+      message: "Redacted for security"
+```
+
+## <a id="see-also"></a>See Also
+
+For more information about Spring Cloud Connectors, see the following:
+
+* [Spring Cloud Cloud Foundry Connector documentation](https://cloud.spring.io/spring-cloud-connectors/spring-cloud-cloud-foundry-connector.html)
+* [Spring Cloud Connectors documentation](https://cloud.spring.io/spring-cloud-connectors/spring-cloud-connectors.html)
+* [Spring Cloud Connectors for Spring Cloud Services on Pivotal Cloud Foundry](https://github.com/pivotal-cf/spring-cloud-services-connector)

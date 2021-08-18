@@ -1,0 +1,58 @@
+---
+title: Installing Spring Cloud&reg; Services for Pivotal Cloud Foundry
+owner: Spring Cloud Services
+---
+
+<style>
+    .note.warning {
+        background-color: #fdd;
+        border-color: #fbb
+    }
+
+    .note.warning:before {
+        color: #f99;
+     }
+</style>
+
+<strong><%= modified_date %></strong>
+
+Ensure that you have or have completed all items listed in <a href="common/index.html#requirements">Requirements</a>. Then follow the below steps to install Spring Cloud Services.
+
+## <a id="installation-steps"></a>Installation Steps
+
+1. Download Spring Cloud Services from [Pivotal Network](https://network.pivotal.io/).
+
+1. In the Installation Dashboard of [Pivotal Cloud Foundry](https://network.pivotal.io/products/pivotal-cf) (PCF) Operations Manager, click **Import a Product** on the left sidebar to upload the Spring Cloud Services `.pivotal` file.
+
+1. In the left sidebar, under **Spring Cloud Services**, click the <strong>&#43;</strong> button next to the version number.
+
+1. When the **Spring Cloud Services** tile appears in the **Installation Dashboard**, click it. In the **Settings** tab, click **Assign AZs and Networks**.
+
+    <%= image_tag("./images/installation/azs-and-networks.png") %>
+
+    Select the availability zones for the tile to use. In the **Network** section, select the network used by Pivotal Application Service (or Elastic Runtime). When finished, click **Save**.
+
+<%# removing for now
+1. If the **Stemcell** tab is highlighted in orange, click it. Download the correct stemcell from [Pivotal Network](https://network.pivotal.io) and click **Import Stemcell** to import it.
+
+    installation/stemcell.png
+%>
+
+1. Return to the Installation Dashboard.
+
+1. Click **Review Pending Changes**. For more information about this Ops Manager page, see [Reviewing Pending Product Changes](https://docs.pivotal.io/pivotalcf/customizing/review-pending-changes.html).
+
+1. Click **Apply Changes** to install the tile.
+
+## <a id="running-alongside-previous-versions"></a>Running Alongside Previous Versions
+
+Spring Cloud Services (SCS) 3.0.x can be installed alongside earlier versions of Spring Cloud Services, including 2.0.x. SCS 3.0.x includes only the Config Server service, which is named `p.config-server` instead of `p-config-server` as in 2.0.x and earlier versions. This service can run alongside the services included in 2.0.x and earlier versions. Because SCS 3.0.x includes only the Config Server service, you may wish to [disable the older `p-config-server` service](https://docs.pivotal.io/pivotalcf/services/access-control.html#disable-access) and allow only the new `p.config-server` Config Server service to be created.
+
+Older Config Server service instances cannot be upgraded to the new `p.config-server` service. Instead, you must recreate `p-config-server` service instances. Most parameters used to create a `p-config-server` service instance with the Cloud Foundry Command Line Interface (cf CLI), using the `cf create-service` command with the `-c` flag, can also be used to create a `p.config-server` service instance. The following parameters are exceptions which can be used with the `p-config-server` service but cannot be used with the `p.config-server` service:
+
+* `encrypt.key`
+* `git.repos`
+* `composite.git` (see [Composite Backends](./common/config-server/composite-backends.html) for information about how to configure the composite backend in the SCS 3.0.x Config Server)
+* `composite.vault` (see [Composite Backends](./common/config-server/composite-backends.html) for information about how to configure the composite backend in the SCS 3.0.x Config Server)
+
+SCS 3.0.x service instances are backwards-compatible with version 2.0.1.RELEASE of the SCS client dependencies.

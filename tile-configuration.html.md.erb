@@ -1,0 +1,68 @@
+---
+title: Tile Configuration
+owner: Spring Cloud Services
+---
+
+<strong><%= modified_date %></strong>
+
+See below for information about Spring Cloud Services tile options, resource configuration, and lifecycle errands.
+
+<p class='note'><strong>Note</strong>: Ops Manager administrators can use Role-Based Access Control (RBAC) to manage which operators can make deployment changes, view credentials, and manage user roles in Ops Manager. Therefore, your role permissions might not allow you to perform every procedure in this operator guide. For more information about roles in Ops Manager, see <a href="https://docs.pivotal.io/pivotalcf/opsguide/config-rbac.html#about">Understand Roles in Ops Manager</a>.</p>
+
+## <a id="tile-configuration-options"></a>Tile Configuration Options
+
+The Spring Cloud Services (SCS) tile includes settings for various options. You can configure these by visiting the Installation Dashboard of Pivotal Cloud Foundry&reg; Operations Manager (Ops Manager), clicking the Spring Cloud Services tile, and then navigating to the **SCS Service Broker** pane.
+
+### <a id="configure-service-access"></a>Configure Service Access
+
+By default, the Config Server service is made available globally (i.e. to all orgs). You can configure the service availability in the Spring Cloud Services tile settings, under **Config Server access**.
+
+<%= image_tag("/spring-cloud-services/images/operator-information/configure-service-access.png") %>
+
+Select **Global** to make the Config Server service available to all orgs, or select **None** to make the Config Server service unavailable to all orgs.
+
+### <a id="set-buildpack-for-service-instances"></a>Set Buildpack for Service Instances
+
+By default, the Spring Cloud Services service broker stages service instance backing apps using the buildpack chosen by the platform's buildpack detection; normally, this will be the highest-priority Java buildpack. To cause the broker to use a particular Java buildpack regardless of priority, you can set the name of the buildpack to use in the Spring Cloud Services tile settings, under **Java Buildpack**.
+
+<%= image_tag("/spring-cloud-services/images/operator-information/configure-buildpack.png") %>
+
+Enter the name of the desired Java buildpack. The broker will use the selected buildpack to stage service instance backing apps.
+
+### <a id="set-push-timeout-for-backing-applications"></a>Set Service Instance Timeout
+
+By default, the Spring Cloud Services service broker will wait 30 minutes before considering a service instance operation to have failed. You can specify a different timeout interval in the Spring Cloud Services tile settings, under **Status change timeout**.
+
+<%= image_tag("/spring-cloud-services/images/operator-information/configure-service-instance-timeout.png") %>
+
+Enter the desired number of minutes. The broker will allow the specified number of minutes for service instance operations to complete.
+
+### <a id="set-custom-domain-for-service-instances"></a>Set Custom Domain for Service Instances
+
+By default, the Spring Cloud Services service broker assigns routes to service instances using the Pivotal Cloud Foundry (PCF) application domain. You can specify a custom domain for service instance routes in the Spring Cloud Services tile settings, under **Service instances domain**.
+
+<p class="note"><strong>Important: </strong> Your custom domain must be available to the <code>p-spring-cloud-services</code> org. If you are installing Spring Cloud Services, you must manually create this org before configuring the custom domain in the Spring Cloud Services tile settings.</p>
+
+<%= image_tag("/spring-cloud-services/images/operator-information/configure-custom-domain.png") %>
+
+Enter the desired domain. The broker will use this domain to create routes for service instances.
+
+## <a id="lifecycle-errand-configuration"></a>Lifecycle Errand Configuration
+
+The Spring Cloud Services tile includes two colocated lifecycle errands. You can view these in Ops Manager by visiting the Installation Dashboard, clicking the Spring Cloud Services tile, and then navigating to the **Errands** pane.
+
+<%= image_tag("/spring-cloud-services/images/operator-information/errands.png") %>
+
+Spring Cloud Services includes one post-deploy errands and one pre-delete errand. These errands can be individually set to always run (**On**) or to never run (**Off**).
+
+<p class='note'><strong>Important</strong>: To ensure that your PCF foundation receives important updates to the tile, Pivotal recommends that all Spring Cloud Services lifecycle errands be set to <strong>On</strong>.</p>
+
+The **register-brokers** errand registers the Spring Cloud Services Config Server service broker and the associated mirror service's broker with the Cloud Controller and makes the Config Server service's service plans available to all orgs. The **destroy-brokers** errand deletes all orgs and spaces specific to Spring Cloud Services and deregisters the Config Server and mirror service brokers from the Cloud Controller.
+
+## <a id="mirror-service-resource-configuration"></a>Mirror Service Resource Configuration
+
+The Spring Cloud Services Config Server relies on a "mirror service" to make mirrors of Git repositories used by Config Server service instances. You can configure the size of the persistent disk used to store these Git mirrors. In the Spring Cloud Services tile settings, navigate to the **Resource Config** pane.
+
+<%= image_tag("/spring-cloud-services/images/operator-information/configure-mirror-service-resource.png") %>
+
+For the **spring-cloud-services** job, select the desired disk size value from the dropdown under **Persistent Disk Type**. The default value is 10 GB. Consider setting a size equal to the disk space required to mirror all Git repositories potentially used by Config Server service instances, with some additional disk space.

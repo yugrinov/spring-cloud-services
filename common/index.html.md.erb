@@ -1,0 +1,52 @@
+---
+title: Spring Cloud&reg; Services
+owner: Spring Cloud Services
+---
+
+### What Is Spring Cloud Services?
+
+Spring Cloud Services <%=vars.scs_suffix%> packages the [Spring Cloud Config](https://spring.io/projects/spring-cloud-config) Server and makes it available as a service in the PCF Marketplace.
+
+### Service Versions
+
+Spring Cloud Services currently provides the following service.
+
+| Service Type                                                         | Current Version |
+|----------------------------------------------------------------------|-----------------|
+| <a href="./config-server/index.html">Config Server</a>               | 30              |
+
+See below for the Spring Cloud Services releases that include each service version.
+
+| Service Version | Tile Version       |
+------------------|--------------------|
+| 10              | 1.5.x              |
+| 20              | 2.0.x              |
+| 30              | 3.0.x              |
+
+<% if vars.platform_code == 'PWS' %>
+### Service Plans
+
+Spring Cloud Services currently provides the following service plans:
+
+| Plan Name             | Description                                                                         |
+------------------------|-------------------------------------------------------------------------------------|
+| <code>trial</code>    | Service instances are free and are automatically deleted seven days after creation. |
+| <code>standard</code> | Service instances are paid, at $39.99 per month.                                    |
+
+<p class="note warning"><strong>WARNING: </strong> Service instances created using the <code>trial</code> plan are deleted automatically after seven days. Use this service plan for trial or demonstration purposes only.</p>
+
+#### <code>trial</code> Service Instance Automatic Deletion
+
+Service instances created using the `trial` plan are deleted seven days after creation. You can use this plan to create service instances for trial or demonstration purposes for short-term usage. Do not rely on the `trial` plan for service instances used in production.
+<% end %>
+
+<% if vars.platform_code == 'PCF' %>
+ <%= partial vars.scs_details %>
+
+<a id="requirements"></a>
+## Requirements
+
+Spring Cloud Services for PCF has the following requirements:
+
+* [Java Cloud Foundry buildpack](https://github.com/cloudfoundry/java-buildpack) version 4.5 or later (if the default Java buildpack is not at version 4.5 or later, you must specify an alternate buildpack that is at version 4.5 or later when installing Spring Cloud Services; see [Set Buildpack for Service Instances](../tile-configuration.html#set-buildpack-for-service-instances))
+<% end %>

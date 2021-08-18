@@ -1,0 +1,29 @@
+---
+title: Using the Dashboard
+owner: Spring Cloud Services
+---
+
+<strong><%= modified_date %></strong>
+
+You can find the dashboard using the Cloud Foundry Command Line Interface tool (cf CLI). Run `cf service SERVICE_NAME`, where `SERVICE_NAME` is the name of the Config Server service instance:
+
+<pre class="terminal">
+$ cf service cook-config-server
+Showing info of service cook-config-server in org bklein / space dev as admin...
+
+name:            cook-config-server
+service:         p.config-server
+tags:
+plan:            standard
+description:     Spring Cloud Config Server service
+documentation:
+dashboard:       https://config-server-a6b2a01b-9685-4f1b-a94b-5b5b45679d15.apps.tripoli.cf-app.com/dashboard
+
+...
+</pre>
+
+Visit the URL given for `dashboard`.
+
+The dashboard shows the current health of the Config Server along with the JSON object used to configure its settings.
+
+<%= image_tag(vars.scs_cs_using_dashboard_updated_dashboard) %>
