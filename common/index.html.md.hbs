@@ -41,6 +41,7 @@ Service instances created using the `trial` plan are deleted seven days after cr
 {{/is}}
 
 {{# is vars.platform_code "=" 'PCF' }}
+{{> (lookup . 'vars.scs_details') }}
 
 <a id="requirements"></a>
 ## Requirements
