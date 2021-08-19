@@ -3,8 +3,6 @@ title: Client Dependencies
 owner: Spring Cloud Services
 ---
 
-<strong><%= modified_date %></strong>
-
 See below for information about the dependencies required for client apps using Spring Cloud Services service instances.
 
 ## <a id="what-are"></a>What are the Client Dependencies?
@@ -31,53 +29,53 @@ Each of the Spring Cloud Services services has a corresponding starter. Similarl
 
 <%= partial 'general-dependencies' %>
 
-### <a id="config-server"></a>Config Server
+    ### <a id="config-server"></a>Config Server
 
-Your app must declare `spring-cloud-services-starter-config-client` as a dependency.
+    Your app must declare `spring-cloud-services-starter-config-client` as a dependency.
 
-<%= partial 'config-server-dependency' %>
+    <%= partial 'config-server-dependency' %>
 
-The Spring Cloud Services starter for Config Server includes:
+        The Spring Cloud Services starter for Config Server includes:
 
-* The Spring Cloud Config Client library
-* The Spring Security OAuth2 library
+        * The Spring Cloud Config Client library
+        * The Spring Security OAuth2 library
 
-## <a id="client-dependency-versioning"></a>Client Dependency Versioning
+        ## <a id="client-dependency-versioning"></a>Client Dependency Versioning
 
-A release of the Spring Cloud Services client dependencies follows a release of the underlying open-source Spring Cloud components, which are based on particular releases of Spring Boot. For more information about the basis of Spring Cloud or Spring Cloud Services library releases, see below.
+        A release of the Spring Cloud Services client dependencies follows a release of the underlying open-source Spring Cloud components, which are based on particular releases of Spring Boot. For more information about the basis of Spring Cloud or Spring Cloud Services library releases, see below.
 
-### <a id="spring-cloud-oss-releases"></a>Spring Cloud OSS Releases
+        ### <a id="spring-cloud-oss-releases"></a>Spring Cloud OSS Releases
 
-Each Spring Cloud major release is named after a London Underground station (as in "Spring Cloud Camden.RELEASE"). Minor releases are known as service releases and are designated `SR[n]` (as in "Spring Cloud Camden.SR7"), where `[n]` is the minor release number.
+        Each Spring Cloud major release is named after a London Underground station (as in "Spring Cloud Camden.RELEASE"). Minor releases are known as service releases and are designated `SR[n]` (as in "Spring Cloud Camden.SR7"), where `[n]` is the minor release number.
 
-A given major release of Spring Cloud supports the current Spring Boot minor release and one Spring Boot minor release following. When a new Spring Boot major release is published, it will be supported only in the next major release of Spring Cloud. (The Spring Boot 2.0 release follows the Spring Boot 1.5 release; there was no 1.6 release.)
+        A given major release of Spring Cloud supports the current Spring Boot minor release and one Spring Boot minor release following. When a new Spring Boot major release is published, it will be supported only in the next major release of Spring Cloud. (The Spring Boot 2.0 release follows the Spring Boot 1.5 release; there was no 1.6 release.)
 
-| Spring Cloud Release | Supported Spring Boot Release |
-|----------------------|-------------------------------|
-| Greenwich            | 2.1                           |
-| Finchley             | 2.0                           |
-| Edgware              | 1.5                           |
+        | Spring Cloud Release | Supported Spring Boot Release |
+        |----------------------|-------------------------------|
+        | Greenwich | 2.1 |
+        | Finchley | 2.0 |
+        | Edgware | 1.5 |
 
-### <a id="spring-cloud-services-client-releases"></a>Spring Cloud Services Client Releases
+        ### <a id="spring-cloud-services-client-releases"></a>Spring Cloud Services Client Releases
 
-The Spring Cloud Services connectors, as well as the starters dependencies that include the connectors, are versioned and released independently of the Spring Cloud Services tile. The connectors and starters are based on the open-source Spring Cloud client libraries for Config Server, and have a new release to follow each Spring Cloud release that affects these components.
+        The Spring Cloud Services connectors, as well as the starters dependencies that include the connectors, are versioned and released independently of the Spring Cloud Services tile. The connectors and starters are based on the open-source Spring Cloud client libraries for Config Server, and have a new release to follow each Spring Cloud release that affects these components.
 
-A given minor release of the Spring Cloud Services starters uses a particular release of Spring Cloud.
+        A given minor release of the Spring Cloud Services starters uses a particular release of Spring Cloud.
 
-| Spring Cloud Services Starters Release | Underlying Spring Cloud Release |
-|----------------------------------------|---------------------------------|
-| 2.1.x                                  | Greenwich.RELEASE               |
-| 2.0.x                                  | Finchley.RELEASE                |
-| 1.6.x                                  | Edgware.RELEASE                 |
+        | Spring Cloud Services Starters Release | Underlying Spring Cloud Release |
+        |----------------------------------------|---------------------------------|
+        | 2.1.x | Greenwich.RELEASE |
+        | 2.0.x | Finchley.RELEASE |
+        | 1.6.x | Edgware.RELEASE |
 
-### <a id="spring-cloud-services-tile-releases"></a>Spring Cloud Services Tile Releases
+        ### <a id="spring-cloud-services-tile-releases"></a>Spring Cloud Services Tile Releases
 
-The Spring Cloud Services tile is versioned and released independently of the Spring Cloud Services connectors and starters. The tile contains the server-side components from Spring Cloud for Config Server, and typically has a new release following each Spring Cloud service release that affects these components.
+        The Spring Cloud Services tile is versioned and released independently of the Spring Cloud Services connectors and starters. The tile contains the server-side components from Spring Cloud for Config Server, and typically has a new release following each Spring Cloud service release that affects these components.
 
-A given minor release of the tile includes server-side components from a particular release of Spring Cloud, typically the last stable release.
+        A given minor release of the tile includes server-side components from a particular release of Spring Cloud, typically the last stable release.
 
-| Spring Cloud Services Tile Release | Underlying Spring Cloud Release |
-|------------------------------------|---------------------------------|
-| 3.0.x                              | Greenwich                       |
-| 2.0.x                              | Finchley                        |
-| 1.5.x                              | Edgware                         |
+        | Spring Cloud Services Tile Release | Underlying Spring Cloud Release |
+        |------------------------------------|---------------------------------|
+        | 3.0.x | Greenwich |
+        | 2.0.x | Finchley |
+        | 1.5.x | Edgware |
