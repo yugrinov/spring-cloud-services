@@ -11,27 +11,27 @@ Spring Cloud Services {{ vars.scs_suffix }} packages the [Spring Cloud Config](h
 
 Spring Cloud Services currently provides the following service.
 
-| Service Type                                                         | Current Version |
+| Service Type | Current Version |
 |----------------------------------------------------------------------|-----------------|
-| <a href="./config-server/index.html">Config Server</a>               | 30              |
+| <a href="./config-server/index.html">Config Server</a> | 30 |
 
 See below for the Spring Cloud Services releases that include each service version.
 
-| Service Version | Tile Version       |
+| Service Version | Tile Version |
 ------------------|--------------------|
-| 10              | 1.5.x              |
-| 20              | 2.0.x              |
-| 30              | 3.0.x              |
+| 10 | 1.5.x |
+| 20 | 2.0.x |
+| 30 | 3.0.x |
 
 {{# is vars.platform_code "=" 'PWS' }}
 ### Service Plans
 
 Spring Cloud Services currently provides the following service plans:
 
-| Plan Name             | Description                                                                         |
+| Plan Name | Description |
 ------------------------|-------------------------------------------------------------------------------------|
-| <code>trial</code>    | Service instances are free and are automatically deleted seven days after creation. |
-| <code>standard</code> | Service instances are paid, at $39.99 per month.                                    |
+| <code>trial</code> | Service instances are free and are automatically deleted seven days after creation. |
+| <code>standard</code> | Service instances are paid, at $39.99 per month. |
 
 <p class="note warning"><strong>WARNING: </strong> Service instances created using the <code>trial</code> plan are deleted automatically after seven days. Use this service plan for trial or demonstration purposes only.</p>
 
@@ -41,7 +41,6 @@ Service instances created using the `trial` plan are deleted seven days after cr
 {{/is}}
 
 {{# is vars.platform_code "=" 'PCF' }}
-{{> (lookup . 'vars.scs_details') }}
 
 <a id="requirements"></a>
 ## Requirements
