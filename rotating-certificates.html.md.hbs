@@ -58,30 +58,30 @@ $ credhub curl -p "/api/v1/certificates" -X GET | jq '.certificates[] |
 After rotating a CA certificate, you must regenerate the leaf certificates signed by that CA certificate.
 
 1. Look up the CA certificate:
-``
-$ credhub curl -p "/api/v1/certificates?name=/p-bosh/p_spring-cloud-services-b97ed088d2495d6813a9/pxc_server_ca"
-``
+  <pre class="terminal">
+  $ credhub curl -p "/api/v1/certificates?name=/p-bosh/p_spring-cloud-services-b97ed088d2495d6813a9/pxc_server_ca"
+  </pre>
 You should see only one entry in the <code>versions</code> list. Copy the <code>id</code> of this version.
 1. Using the <code>id</code> copied in the previous step, generate a new transitional certificate version:
-``
-$ credhub curl -p "/api/v1/certificates/be51e4a2-6b4a-47ea-a5e8-58034b0742ba/regenerate" -d '{"set_as_transitional": true}' -X POST
-``
+<pre class="terminal">
+	$ credhub curl -p "/api/v1/certificates/be51e4a2-6b4a-47ea-a5e8-58034b0742ba/regenerate" -d '{"set_as_transitional": true}' -X POST
+	</pre>
 Visit the Ops Manager Installation Dashboard and apply your changes.
 1. Look up the CA certificate again:
-``
-$ credhub curl -p "/api/v1/certificates?name=/p-bosh/p_spring-cloud-services-b97ed088d2495d6813a9/pxc_server_ca"
-``
+<pre class="terminal">
+	$ credhub curl -p "/api/v1/certificates?name=/p-bosh/p_spring-cloud-services-b97ed088d2495d6813a9/pxc_server_ca"
+	</pre>
 The new certificate version currently has <code>"transitional": true</code>, and the old version has <code>"transitional": false</code>. Copy the <code>id</code> of the old version and use it to update the CA certificate, making the old version <code>transitional</code>:
-``
-$ credhub curl -p /api/v1/certificates/be51e4a2-6b4a-47ea-a5e8-58034b0742ba/update_transitional_version -d '{"version": "834a4d40-d925-49f1-aced-a4362819d173"}' -X PUT
-``
+	<pre class="terminal">
+	$ credhub curl -p /api/v1/certificates/be51e4a2-6b4a-47ea-a5e8-58034b0742ba/update_transitional_version -d '{"version": "834a4d40-d925-49f1-aced-a4362819d173"}' -X PUT
+	</pre>
 1. Regenerate the leaf certificates that are signed by this CA certificate:
-``
-$ credhub regenerate -n /p-bosh/p_spring-cloud-services-b97ed088d2495d6813a9/pxc_mysql_server_certificate
-``
+	<pre class="terminal">
+	$ credhub regenerate -n /p-bosh/p_spring-cloud-services-b97ed088d2495d6813a9/pxc_mysql_server_certificate
+	</pre>
 Return to the Ops Manager Installation Dashboard and apply your changes.
 1. Remove the transitional flag from the old version of the CA certificate:
-``
-$ credhub curl -p /api/v1/certificates/be51e4a2-6b4a-47ea-a5e8-58034b0742ba/update_transitional_version -d '{"version": null}' -X PUT
-``
-Again returning to the Ops Manager Installation Dashboard, apply your changes.
+	<pre class="terminal">
+	$ credhub curl -p /api/v1/certificates/be51e4a2-6b4a-47ea-a5e8-58034b0742ba/update_transitional_version -d '{"version": null}' -X PUT
+	</pre>
+	Again returning to the Ops Manager Installation Dashboard, apply your changes.
