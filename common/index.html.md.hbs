@@ -23,7 +23,7 @@ See below for the Spring Cloud Services releases that include each service versi
 | 20              | 2.0.x              |
 | 30              | 3.0.x              |
 
-<% if vars.platform_code == 'PWS' %>
+{{# is vars.platform_code "=" 'PWS' }}
 ### Service Plans
 
 Spring Cloud Services currently provides the following service plans:
@@ -38,10 +38,10 @@ Spring Cloud Services currently provides the following service plans:
 #### <code>trial</code> Service Instance Automatic Deletion
 
 Service instances created using the `trial` plan are deleted seven days after creation. You can use this plan to create service instances for trial or demonstration purposes for short-term usage. Do not rely on the `trial` plan for service instances used in production.
-<% end %>
+{{/is}}
 
-<% if vars.platform_code == 'PCF' %>
- <%= partial vars.scs_details %>
+{{# is vars.platform_code "=" 'PCF' }}
+{{> (lookup . 'vars.scs_details' }}
 
 <a id="requirements"></a>
 ## Requirements
@@ -49,4 +49,4 @@ Service instances created using the `trial` plan are deleted seven days after cr
 Spring Cloud Services for PCF has the following requirements:
 
 * [Java Cloud Foundry buildpack](https://github.com/cloudfoundry/java-buildpack) version 4.5 or later (if the default Java buildpack is not at version 4.5 or later, you must specify an alternate buildpack that is at version 4.5 or later when installing Spring Cloud Services; see [Set Buildpack for Service Instances](../tile-configuration.html#set-buildpack-for-service-instances))
-<% end %>
+{{/is}}
